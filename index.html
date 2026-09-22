@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Meu Financeiro" />
+  <title>Meu Financeiro</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">ASSISTENTE FINANCEIRO</p>
+        <h1>Meu Financeiro</h1>
+      </div>
+      <button id="installBtn" class="ghost hidden">Instalar</button>
+    </header>
+
+    <main id="view">
+      <section class="hero-card">
+        <div>
+          <span class="muted">Livre para gastar</span>
+          <h2 id="freeAmount">R$ 0,00</h2>
+          <p id="dailyLimit">R$ 0,00 por dia até o fim do mês</p>
+        </div>
+        <div class="health-badge" id="healthBadge">Aguardando dados</div>
+      </section>
+
+      <section class="grid stats-grid">
+        <article class="card">
+          <span class="muted">Renda líquida</span>
+          <strong id="incomeStat">R$ 0,00</strong>
+        </article>
+        <article class="card">
+          <span class="muted">Contas obrigatórias</span>
+          <strong id="fixedStat">R$ 0,00</strong>
+        </article>
+        <article class="card">
+          <span class="muted">Dívidas / parcelas</span>
+          <strong id="debtStat">R$ 0,00</strong>
+        </article>
+        <article class="card">
+          <span class="muted">Investimentos planejados</span>
+          <strong id="investStat">R$ 0,00</strong>
+        </article>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">CONTROLE DO MÊS</p>
+            <h3>Resumo</h3>
+          </div>
+          <button class="primary small" data-action="open-transaction">+ Lançamento</button>
+        </div>
+        <div class="card progress-card">
+          <div class="progress-row">
+            <span>Gastos livres</span>
+            <strong id="spentFree">R$ 0,00</strong>
+          </div>
+          <div class="progress-track"><div id="budgetBar" class="progress-fill"></div></div>
+          <div class="progress-row foot">
+            <span id="budgetLabel">0% do limite livre utilizado</span>
+            <span id="remainingDays">0 dias restantes</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">ALERTAS</p>
+            <h3>Controle de gastos</h3>
+          </div>
+        </div>
+        <div id="alerts" class="stack"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">RECENTES</p>
+            <h3>Últimos lançamentos</h3>
+          </div>
+          <button class="ghost small" data-nav="transactions">Ver todos</button>
+        </div>
+        <div id="recentTransactions" class="stack"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-nav="home">🏠<span>Início</span></button>
+      <button class="nav-item" data-nav="transactions">💸<span>Lançamentos</span></button>
+      <button class="nav-item" data-nav="debts">📉<span>Dívidas</span></button>
+      <button class="nav-item" data-nav="investments">📈<span>Investir</span></button>
+      <button class="nav-item" data-nav="settings">⚙️<span>Ajustes</span></button>
+    </nav>
+  </div>
+
+  <dialog id="transactionDialog" class="modal">
+    <form method="dialog" id="transactionForm">
+      <div class="modal-head">
+        <h3>Novo lançamento</h3>
+        <button value="cancel" class="icon-btn">✕</button>
+      </div>
+      <label>Tipo
+        <select id="txType">
+          <option value="expense">Despesa</option>
+          <option value="income">Receita</option>
+        </select>
+      </label>
+      <label>Descrição
+        <input id="txDesc" placeholder="Ex.: Mercado" required />
+      </label>
+      <label>Valor
+        <input id="txAmount" type="number" min="0" step="0.01" placeholder="0,00" required />
+      </label>
+      <label>Categoria
+        <select id="txCategory">
+          <option>Alimentação</option>
+          <option>Transporte</option>
+          <option>Moradia</option>
+          <option>Saúde</option>
+          <option>Lazer</option>
+          <option>Compras</option>
+          <option>Salário</option>
+          <option>Outros</option>
+        </select>
+      </label>
+      <label>Classificação
+        <select id="txClass">
+          <option value="free">Gasto livre</option>
+          <option value="fixed">Conta obrigatória</option>
+          <option value="debt">Dívida / parcela</option>
+          <option value="investment">Investimento</option>
+        </select>
+      </label>
+      <button class="primary full" type="submit">Salvar lançamento</button>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
